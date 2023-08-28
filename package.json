@@ -13,13 +13,18 @@
   },
   "dependencies": {
     "@react-native-google-signin/google-signin": "7.2.2",
-    "@robinbobin/react-native-google-drive-api-wrapper": "^1.2.3",
+    "@robinbobin/react-native-google-drive-api-wrapper": "1.2.3",
     "axios": "1.4.0",
+    "mobx": "^6.10.0",
+    "mobx-react-lite": "^4.0.4",
     "react": "18.2.0",
-    "react-native": "0.71.13"
+    "react-native": "0.71.13",
+    "react-native-mmkv": "^2.10.2"
   },
   "devDependencies": {
     "@babel/core": "7.20.12",
+    "@babel/plugin-proposal-class-properties": "^7.18.6",
+    "@babel/plugin-proposal-decorators": "^7.22.10",
     "@babel/preset-env": "7.20.2",
     "@babel/runtime": "7.20.0",
     "@react-native-community/eslint-config": "3.2.0",

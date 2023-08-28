@@ -10,25 +10,35 @@ GoogleSignin.configure({
     '169771787827-pfpuu8e5t729qrntcb7bmsprc4ev0deb.apps.googleusercontent.com',
 });
 
-export class OAuthService {
+export class GoogleAuthService {
   static accessToken: string | null = null;
   static userInfo: User | null = null;
 
-  static signIn = async () => {
+  private static requestUserInfo = async () => {
+    return await GoogleSignin.signIn();
+  };
+
+  private static requestPermissions = async () => {
+    return await GoogleSignin.addScopes({
+      scopes: ['https://www.googleapis.com/auth/drive'],
+    });
+  };
+
+  private static getToken = async () => {
+    return (await GoogleSignin.getTokens()).accessToken;
+  };
+
+  static requestEmployee = async () => {
     try {
-      let userInfo = await GoogleSignin.signIn();
+      this.userInfo = await this.requestUserInfo();
 
       try {
-        const response = await GoogleSignin.addScopes({
-          scopes: ['https://www.googleapis.com/auth/drive'],
-        });
-        if (response) {
-          userInfo = response;
-        }
+        this.userInfo = await this.requestPermissions();
       } catch {}
 
-      this.accessToken = (await GoogleSignin.getTokens()).accessToken;
-      this.userInfo = userInfo;
+      this.accessToken = await this.getToken();
+
+      return {...this.userInfo, accessToken: this.accessToken};
     } catch (error: any) {
       if (error.code === statusCodes.SIGN_IN_CANCELLED) {
         console.error('user cancelled the login flow');
